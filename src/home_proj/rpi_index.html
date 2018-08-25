@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+  <link rel="shortcut icon" href="favicon.ico">
+    <title>WebSockets Hello World</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+      body {
+        text-align: center;
+        min-width: 500px;
+      }
+    </style>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script>
+ 
+      // log function
+ 
+      $(document).ready(function () {
+        $("div#message_details").hide()
+ 
+        var ws;
+        
+          // create websocket instance
+          ws = new WebSocket("ws://192.168.0.104:8888/ws");
+           
+          // Handle incoming websocket message callback
+          ws.onmessage = function(evt) {
+            console.log("Message Received: " + evt.data);
+            ws.send('echo ' + evt.data);
+            console.log("Message Sent1: " + 'echo ' + evt.data);
+            };
+ 
+          // Close Websocket callback
+          ws.onclose = function(evt) {
+            console.log("***Connection Closed***");
+            };
+ 
+          // Open Websocket callback
+          ws.onopen = function(evt) { 
+            console.log("***Connection Opened First Socket***");
+          };
+          
+      });
+    </script>
+  </head>
+ 
+  <body>
+    <h1>WebSockets Hello World</h1>
+        
+    </div>
+  </body>
+</html>

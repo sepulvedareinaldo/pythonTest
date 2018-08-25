@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+  <head>
+    <title>WebSockets Hello World</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+      body {
+        text-align: center;
+        min-width: 500px;
+      }
+    </style>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script>
+ 
+      // log function
+ 
+      $(document).ready(function () {
+        $("div#message_details").hide()
+ 
+
+
+
+        
+
+        var ws1;
+        
+          // create websocket instance
+          ws1 = new WebSocket("ws://localhost:8888/ws1");
+           
+          // Handle incoming websocket message callback
+          ws1.onmessage = function(evt) {
+            console.log("Message Received1: " + evt.data);
+            ws1.send('echo ' + evt.data);
+            console.log("Message Sent1: " + 'echo ' + evt.data);
+            };
+ 
+          // Close Websocket callback
+          ws1.onclose = function(evt) {
+            console.log("***Connection Closed***");
+            };
+ 
+          // Open Websocket callback
+          ws1.onopen = function(evt) { 
+            console.log("***Connection Opened First Socket***");
+          };
+          
+        var ws2;
+        
+          // create websocket instance
+          ws2 = new WebSocket("ws://localhost:8888/ws2");
+          
+          // Open Websocket callback
+          ws2.onopen = function(evt) { 
+            console.log("***Connection Opened Second Socket***");
+          };
+          // Close Websocket callback
+          ws2.onclose = function(evt) {
+            console.log("***Connection Second Closed***");
+            };
+          ws2.onmessage = function(evt) {
+            console.log("Message Received2: " + evt.data);
+            ws2.send('echo ' + evt.data);
+            console.log("Message Sent2: " + 'echo ' + evt.data);
+            };
+
+        var ws3;
+        
+          // create websocket instance
+          ws3 = new WebSocket("ws://localhost:8888/ws3");
+          
+          // Open Websocket callback
+          ws3.onopen = function(evt) { 
+            console.log("***Connection 3 opend***");
+          };
+          // Close Websocket callback
+          ws3.onclose = function(evt) {
+            console.log("***Connection 3 Closed***");
+            };
+          ws3.onmessage = function(evt) {
+            console.log("Message Received2: " + evt.data);
+            };
+          var intervalID = setInterval(function(){ws3.send('mes3 ' + '333');;}, 6000);
+      });
+    </script>
+  </head>
+ 
+  <body>
+    <h1>WebSockets Hello World</h1>
+        
+    </div>
+  </body>
+</html>
