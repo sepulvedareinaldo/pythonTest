@@ -1,4 +1,4 @@
-
+<html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -38,21 +38,21 @@
 }
 </style>
 </head>
-<body>
+<body>hello
 
 <h1>Custom Range Slider</h1>
 
 <div class="slidecontainer1">
-  <p id="tests1"></p>
+  <p id="tests1">hi</p>
   
-  <p>Custom range slider:</p>
-  <input type="range" min="1" max="100" value="50" class="slider" id="myRange2">
+  <p id="custom">Custom range slider1:</p>
+  <input type="range" min="1" max="100" value="50" class="slider" id="myRange1">
 </div>
 
 </body>
 
 <script>
-var slider = document.getElementById("myRange2");
+var slider = document.getElementById("myRange1");
 var output = document.getElementById("tests1");
 output.innerHTML = slider.value; // Display the default slider value
 
@@ -61,4 +61,4 @@ slider.oninput = function() {
     output.innerHTML = this.value;
 } 
 </script>
-
+</html>

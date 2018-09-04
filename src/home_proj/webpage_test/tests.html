@@ -1,8 +1,64 @@
 <html> 
   <head> 
 
-  <object data="imps1.html" width = 50% height= 50%>Warning: imps.html could not be included!</object>
-  <object data="imps2.html" width = 50% height= 50%>Warning: imps.html could not be included!</object>
-
+  <!-- <object id = "range1" data="imps1.html" width = 50% height= 25%>Warning: imps.html could not be included!</object>-->
+  <iframe  id = "range1" src="imps1.html"  width = 50% height= 25% style="border:none;"></iframe>
+  <!-- <object data="imps2.html" width = 50% height= 25%>Warning: imps.html could not be included!</object> -->
+  
+  <p id="innerTests">hello</p>
+  
+  	<!-- <script>
+		
+		var datatest = document.getElementById("innerTests");
+		datatest.innerHTML = "bye"; // Display the default slider value
+		
+		var slider1 = document.getElementById("range1");
+		datatest.innerHTML = "bye2"; // Display the default slider value
+		// Update the current slider value (each time you drag the slider handle)
+		slider1.oninput = function() {
+			datatest.innerHTML = this.value;
+		} 
+		
+	</script> -->
+	
+	<script>
+		
+		
+		var datatest = document.getElementById("innerTests");
+		
+		
+		//soruc = window.frames['myIframe'].src;
+		
+		//soruc = "imps2.html";
+		
+		
+		
+		//var iframe = document.getElementById('range1').contentWindow.document.getElementById("custom");
+		
+		//iframe.innerHTML = "hi";
+		
+		
+		var iframe = document.getElementById("range1");
+		var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+		//datatest.innerHTML = innerDoc.getElementById("custom");
+		
+		console.log(innerDoc.body);
+		//var elmnt = iframe.contentWindow.document.getElementById("custom");
+		
+		
+		
+		datatest.innerHTML = "bye";
+		
+		
+		
+	</script>
+  
+  
+  
   </head> 
+  <body>
+  
+  </body>
+  
+	
 </html>

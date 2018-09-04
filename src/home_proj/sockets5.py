@@ -122,7 +122,7 @@ class IndexHandler(tornado.web.RequestHandler):
         print('started index handle ', handlers)
         self.render("index.html")
         #await self.initialization_time(1)
-        #await self.out_message_in()
+        #await self.out_message_in() #needs to be last method in get.
 
 class crossTalk(tornado.websocket.WebSocketHandler):
     def open(self):

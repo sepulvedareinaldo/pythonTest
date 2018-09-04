@@ -1,0 +1,211 @@
+<!doctype html>
+<html>
+  <head>
+    <title>WebSockets Hello World</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+      body {
+        text-align: center;
+        min-width: 500px;
+      }
+	
+	.slidecontainer {
+		width: 100%;
+	}
+		
+	.slider {
+		-webkit-appearance: none;
+		width: 50%;
+		height: 25px;
+		background: #d3d3d3;
+		outline: none;
+		opacity: 0.7;
+		-webkit-transition: .2s;
+		transition: opacity .2s;
+	}
+
+	.slider:hover {
+		opacity: 1;
+	}
+
+	.slider::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 25px;
+		height: 25px;
+		background: #4CAF50;
+		cursor: pointer;
+	}
+
+	.slider::-moz-range-thumb {
+		width: 25px;
+		height: 25px;
+		background: #4CAF50;
+		cursor: pointer;
+	}
+    </style>
+	
+  </head>
+ 
+	<body>
+		
+		<div class="REDcontainer">
+		  
+		  <p id="custom">RED slider:</p>
+		  <input type="range" min="1" max="100" value="50" class="slider" id="REDRange">
+		</div>
+		<div class="GREENcontainer">
+		  <p id="custom">GREEN slider:</p>
+		  <input type="range" min="1" max="100" value="50" class="slider" id="GREENRange">
+		</div>
+		<div class="BLUEcontainer">
+		  <p id="custom">BLUE slider:</p>
+		  <input type="range" min="1" max="100" value="50" class="slider" id="BLUERange">
+		</div>
+		
+		<input type="text" id="REDval">
+		<button id="sendRED">sendRED</button>
+		<button id="zeroRED">zeroRED</button><br>
+		
+		
+		<input type="text" id="GREENval">
+		<button id="sendGREEN">sendGREEN</button>
+		<button id="zeroGREEN">zeroGREEN</button><br>
+		
+		<input type="text" id="BLUEval">
+		<button id="sendBLUE">sendBLUE</button>
+		<button id="zeroBLUE">zeroBLUE</button><br>
+		
+	</body>
+  
+	<script src="http://code.jquery.com/jquery.min.js"></script>
+	<script>
+ 
+      // log function
+ 
+      $(document).ready(function () {
+        $("div#message_details").hide()
+ 
+
+
+		function myFunction() {
+		  document.getElementById("demo").innerHTML = "Hello World";
+		}
+        
+
+        var ws1;
+        
+          // create websocket instance
+          ws1 = new WebSocket("ws://192.168.0.105:8888/ws1");
+           
+          // Handle incoming websocket message callback
+          ws1.onmessage = function(evt) {
+            console.log("Message Received1: " + evt.data);
+            ws1.send('echo ' + evt.data);
+            console.log("Message Sent1: " + 'echo ' + evt.data);
+            };
+ 
+          // Close Websocket callback
+          ws1.onclose = function(evt) {
+            console.log("***Connection Closed***");
+            };
+ 
+          // Open Websocket callback
+          ws1.onopen = function(evt) { 
+            console.log("***Connection Opened First Socket***");
+          };
+          
+        var ws2;
+        
+          // create websocket instance
+          ws2 = new WebSocket("ws://192.168.0.105:8888/ws2");
+          
+          // Open Websocket callback
+          ws2.onopen = function(evt) { 
+            console.log("***Connection Opened Second Socket***");
+          };
+          // Close Websocket callback
+          ws2.onclose = function(evt) {
+            console.log("***Connection Second Closed***");
+            };
+          ws2.onmessage = function(evt) {
+            console.log("Message Received2: " + evt.data);
+            ws2.send('echo ' + evt.data);
+            console.log("Message Sent2: " + 'echo ' + evt.data);
+            };
+
+        var ws3;
+        
+          // create websocket instance
+          ws3 = new WebSocket("ws://192.168.0.105:8888/ws3");
+          
+          // Open Websocket callback
+          ws3.onopen = function(evt) { 
+            console.log("***Connection 3 opend***");
+			ws3.send("01000");
+			setTimeout(function(){ws3.send("02000");},0.02);
+			setTimeout(function(){ws3.send("03000");},0.04);
+          };
+          // Close Websocket callback
+          ws3.onclose = function(evt) {
+            console.log("***Connection 3 Closed***");
+            };
+          ws3.onmessage = function(evt) {
+            console.log("Message Received2: " + evt.data);
+            };
+          //var intervalID = setInterval(function(){ws3.send(Math.floor(Math.random() * 249));;}, 3000);
+		  
+		  var REDslider = document.getElementById("REDRange");
+		  var GREENslider = document.getElementById("GREENRange");
+		  var BLUEslider = document.getElementById("BLUERange");
+		  
+			REDslider.oninput = function() {
+				message = 1000 + 2*Math.floor(parseInt(this.value));
+				message = "0" + String(message);
+				console.log(message);
+				ws3.send(message);
+			} 
+			GREENslider.oninput = function() {
+				message = 2000 + 2*Math.floor(parseInt(this.value));
+				message = "0" + String(message);
+				console.log(message);
+				ws3.send(message);
+			} 
+			BLUEslider.oninput = function() {
+				message = 3000 + 2*Math.floor(parseInt(this.value));
+				message = "0" + String(message);
+				console.log(message);
+				ws3.send(message);
+			} 
+			
+			function sendRED() {
+				var value = document.getElementById("REDval").value;
+				var message = 1000 + Math.floor(parseInt(value));
+				message = "0" + String(message);
+				console.log(message);
+				ws3.send(message);
+			}
+			function sendGREEN() {
+				var value = document.getElementById("GREENval").value;
+				var message = 2000 + Math.floor(parseInt(value));
+				message = "0" + String(message);
+				console.log(message);
+				ws3.send(message);
+			}
+			function sendBLUE() {
+				var value = document.getElementById("BLUEval").value;
+				var message = 3000 + Math.floor(parseInt(value));
+				message = "0" + String(message);
+				console.log(message);
+				ws3.send(message);
+			}
+			
+			$(document).ready(function(){
+				// Do stuff here, including _calling_ codeAddress(), but not _defining_ it
+			$("#sendRED").click(sendRED);
+			$("#sendGREEN").click(sendGREEN);
+			$("#sendBLUE").click(sendBLUE);
+			});
+      });
+    </script>
+</html>

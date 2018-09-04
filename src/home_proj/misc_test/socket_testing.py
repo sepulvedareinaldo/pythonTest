@@ -31,7 +31,7 @@ class FirstSocketHandler(tornado.websocket.WebSocketHandler):
         print ("First Websocket Opened")
         self.write_message("First Socket Handler")
         print ('First message sent: First Socket Handler')
-        await self.out_message_in()
+        await self.out_message_in() #needs to be last message
 
     def on_message(self, message):
         print('message on First Socket is *** ',message)
@@ -130,7 +130,12 @@ class crossTalk(tornado.websocket.WebSocketHandler):
     
     def on_message(self, message):
         #FirstSocketHandler.write_message(handlers[0], 'ffiirrsstt')
-        print('received from ws3')
+        #value = 1000+int(message)
+        #value = "0" + str(value)
+        value = message
+        print(value)
+        value = value.encode('utf-8')
+        ards.write(value)
         #SecondSocketHandler.send_message('__main__'.SecondSocketHandler, 'second')
     
     def on_close(self):
